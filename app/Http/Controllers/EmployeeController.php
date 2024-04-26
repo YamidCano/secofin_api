@@ -27,10 +27,13 @@ class EmployeeController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'document_type' => 'required|unique:document_types',
+            'names' => 'required',
+            'surname' => 'required',
+            'document' => 'required',
         ], [
-            'document_type.required' => 'El Item es obligatorio',
-            'document_type.unique' => 'El Item ya se encuentra registrado'
+            'names.required' => 'El Item es obligatorio',
+            'surname.required' => 'El Item es obligatorio',
+            'document.required' => 'El Item es obligatorio',
         ]);
 
         if ($validator->fails()) {
@@ -38,7 +41,9 @@ class EmployeeController extends Controller
         }
 
         $employee = employee::create([
-            'name' => $request->name
+            'names' => $request->names,
+            'surname' => $request->surname,
+            'document' => $request->document
         ]);
 
         return Response()->json([
@@ -92,17 +97,22 @@ class EmployeeController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:document_types,name,' . $id,
+            'names' => 'required',
+            'surname' => 'required',
+            'document' => 'required',
         ], [
-            'name.required' => 'El Item es obligatorio',
-            'name.unique' => 'El Item ya se encuentra registrado'
+            'names.required' => 'El Item es obligatorio',
+            'surname.required' => 'El Item es obligatorio',
+            'document.required' => 'El Item es obligatorio',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $employee->name = $request->name;
+        $employee->names = $request->names;
+        $employee->surname = $request->surname;
+        $employee->document = $request->document;
         $employee->save();
 
         return response()->json([

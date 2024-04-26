@@ -8,3 +8,10 @@ php artisan db:seed
 
 php artisan make:model example -mcrs
 
+composer i
+
+modelo
+protected $fillable = [];
+
+
+
