@@ -1,0 +1,10 @@
+git add .
+git commit -m ""
+git pull origin main
+git push origin main
+
+php artisan migrate:fresh --seed
+php artisan db:seed
+
+php artisan make:model example -mcrs
+
