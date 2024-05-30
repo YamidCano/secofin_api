@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\employee;
+use App\Models\functionary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class EmployeeController extends Controller
+class FunctionaryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $employee = employee::all();
+        $functionary = functionary::all();
 
         return Response()->json([
             'status' => true,
-            'data' => $employee ?? [],
+            'data' => $functionary ?? [],
         ], 200);
     }
 
@@ -29,26 +29,30 @@ class EmployeeController extends Controller
         $validator = Validator::make($request->all(), [
             'names' => 'required',
             'surname' => 'required',
-            'document' => 'required',
+            'document' => 'required|unique:functionaries,document',
+            'id_position' => 'required',
         ], [
             'names.required' => 'El Item es obligatorio',
             'surname.required' => 'El Item es obligatorio',
             'document.required' => 'El Item es obligatorio',
+            'document.unique' => 'Usuario ya se encuentra creado',
+            'id_position.required' => 'El Item es obligatorio',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $employee = employee::create([
+        $functionary = functionary::create([
             'names' => $request->names,
             'surname' => $request->surname,
-            'document' => $request->document
+            'document' => $request->document,
+            'id_position' => $request->id_position
         ]);
 
         return Response()->json([
             'status' => true,
-            'data' => $employee ?? [],
+            'data' => $functionary ?? [],
             'message' => 'Item Creado exitosamente'
         ], 200);
     }
@@ -66,21 +70,21 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        $employee = employee::find($id);
+        $functionary = functionary::find($id);
 
-        if (!$employee) {
+        if (!$functionary) {
             return response()->json(['message' => 'Item no encontrada'], 404);
         }
         return response()->json([
             'status' => true,
-            'data' => $employee
+            'data' => $functionary
         ], 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(employee $employee)
+    public function edit(functionary $functionary)
     {
         //
     }
@@ -90,9 +94,9 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $employee = employee::find($id);
+        $functionary = functionary::find($id);
 
-        if (!$employee) {
+        if (!$functionary) {
             return response()->json(['message' => 'Item no encontrado'], 404);
         }
 
@@ -110,14 +114,14 @@ class EmployeeController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $employee->names = $request->names;
-        $employee->surname = $request->surname;
-        $employee->document = $request->document;
-        $employee->save();
+        $functionary->names = $request->names;
+        $functionary->surname = $request->surname;
+        $functionary->document = $request->document;
+        $functionary->save();
 
         return response()->json([
             'status' => true,
-            'data' => $employee,
+            'data' => $functionary,
             'message' => 'Item actualizado exitosamente'
         ], 200);
     }
@@ -127,17 +131,17 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        $employee = employee::find($id);
+        $functionary = functionary::find($id);
 
-        if (!$employee) {
+        if (!$functionary) {
             return response()->json(['message' => 'Item no encontrado'], 404);
         }
 
-        $employee->delete();
+        $functionary->delete();
 
         return response()->json([
             'status' => true,
-            'data' => $employee,
+            'data' => $functionary,
             'message' => 'Item eliminado exitosamente'
         ], 200);
     }

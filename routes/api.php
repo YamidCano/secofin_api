@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\FunctionaryController;
 use App\Http\Controllers\PositionController;
 use App\HTTP\Controllers\PayrollController;
 
@@ -13,12 +13,12 @@ Route::get('/user', function (Request $request) {
 
 
 
-Route::prefix('employee')->group(function () {
-    Route::get('/', [EmployeeController::class, 'index']);
-    Route::post('/create', [EmployeeController::class, 'create']);
-    Route::get('/show/{id}', [EmployeeController::class, 'show']);
-    Route::put('/update/{id}', [EmployeeController::class, 'update']);
-    Route::delete('/delete/{id}', [EmployeeController::class, 'destroy']);
+Route::prefix('functionary')->group(function () {
+    Route::get('/', [FunctionaryController::class, 'index']);
+    Route::post('/create', [FunctionaryController::class, 'create']);
+    Route::get('/show/{id}', [FunctionaryController::class, 'show']);
+    Route::put('/update/{id}', [FunctionaryController::class, 'update']);
+    Route::delete('/delete/{id}', [FunctionaryController::class, 'destroy']);
 });
 
 Route::prefix('position')->group(function () {
