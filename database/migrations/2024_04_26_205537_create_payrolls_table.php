@@ -20,6 +20,12 @@ return new class extends Migration
             $table->integer('risk')->nullable();
             $table->string('salary')->nullable();
             $table->string('worked_days')->nullable();
+            //$table->string('incapacidad')->nullable(); datos ingresados no calculados
+            //$table->string('licencia no remunerada')->nullable(); datos ingresados no calculados
+            //$table->string('vacaciones')->nullable(); datos ingresados no calculados
+            //$table->string('otras novedades')->nullable(); datos ingresados no calculados
+            //$table->string('Client')->nullable(); datos ingresados no calculados
+            //$table->string('type_payroll')->nullable(); datos ingresados no calculados
             $table->timestamps();
         });
     }
