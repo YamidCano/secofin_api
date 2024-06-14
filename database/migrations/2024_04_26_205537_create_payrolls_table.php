@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('payrolls', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_employee')->nullable();
-            $table->foreign('id_employee')->references('id')->on('employees');
+            $table->unsignedBigInteger('id_functionary')->nullable();
+            $table->foreign('id_functionary')->references('id')->on('functionaries');
             $table->unsignedBigInteger('id_position')->nullable();
             $table->foreign('id_position')->references('id')->on('positions');
             $table->integer('risk')->nullable();

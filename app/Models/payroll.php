@@ -10,9 +10,9 @@ class payroll extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function employee()
+    public function functionary()
     {
-        return $this->belongsTo('App\Models\employee', 'id_employee');
+        return $this->belongsTo('App\Models\functionary', 'id_functionary');
     }
 
     public function position()

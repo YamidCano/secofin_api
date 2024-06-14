@@ -21,10 +21,10 @@ class PayrollController extends Controller
                 'risk' => $payroll->risk,
                 'salary' => $payroll->salary,
                 'worked_days' => $payroll->worked_days,
-                'employee_id' => $payroll->id,
-                'names' => $payroll->employee->names,
-                'surname' => $payroll->employee->surname,
-                'document' => $payroll->employee->document,
+                'functionary_id' => $payroll->id,
+                'names' => $payroll->functionary->names,
+                'surname' => $payroll->functionary->surname,
+                'document' => $payroll->functionary->document,
                 'position' => $payroll->position->name
             ];
         });
@@ -41,13 +41,13 @@ class PayrollController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id_employee' => 'required',
+            'id_functionary' => 'required',
             'id_position' => 'required',
             'risk' => 'required',
             'salary' => 'required',
             'worked_days' => 'required',
         ], [
-            'id_employee.required' => 'El Item es obligatorio',
+            'id_functionary.required' => 'El Item es obligatorio',
             'id_position.required' => 'El Item es obligatorio',
             'risk.required' => 'El Item es obligatorio',
             'salary.required' => 'El Item es obligatorio',
@@ -59,7 +59,7 @@ class PayrollController extends Controller
         }
 
         $payroll = payroll::create([
-            'id_employee' => $request->id_employee,
+            'id_functionary' => $request->id_functionary,
             'id_position' => $request->id_position,
             'risk' => $request->risk,
             'salary' => $request->salary,
@@ -97,10 +97,10 @@ class PayrollController extends Controller
                 'risk' => $payroll->risk,
                 'salary' => $payroll->salary,
                 'worked_days' => $payroll->worked_days,
-                'employee_id' => $payroll->id,
-                'names' => $payroll->employee->names,
-                'surname' => $payroll->employee->surname,
-                'document' => $payroll->employee->document,
+                'functionary_id' => $payroll->id,
+                'names' => $payroll->functionary->names,
+                'surname' => $payroll->functionary->surname,
+                'document' => $payroll->functionary->document,
                 'position' => $payroll->position->name
             ];
 
@@ -131,13 +131,13 @@ class PayrollController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'id_employee' => 'required',
+            'id_functionary' => 'required',
             'id_position' => 'required',
             'risk' => 'required',
             'salary' => 'required',
             'worked_days' => 'required',
         ], [
-            'id_employee.required' => 'El Item es obligatorio',
+            'id_functionary.required' => 'El Item es obligatorio',
             'id_position.required' => 'El Item es obligatorio',
             'risk.required' => 'El Item es obligatorio',
             'salary.required' => 'El Item es obligatorio',
@@ -147,7 +147,7 @@ class PayrollController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        $payroll->id_employee = $request->id_employee;
+        $payroll->id_functionary = $request->id_functionary;
         $payroll->id_position = $request->id_position;
         $payroll->risk = $request->risk;
         $payroll->salary = $request->salary;
