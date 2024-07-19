@@ -103,11 +103,13 @@ class FunctionaryController extends Controller
         $validator = Validator::make($request->all(), [
             'names' => 'required',
             'surname' => 'required',
-            'document' => 'required',
+            'document' => 'required|unique:functionaries,document',
+            'id_position' => 'required',
         ], [
             'names.required' => 'El Item es obligatorio',
             'surname.required' => 'El Item es obligatorio',
-            'document.required' => 'El Item es obligatorio',
+            'document.unique' => 'Usuario ya se encuentra creado',
+            'id_position.required' => 'El Item es obligatorio',
         ]);
 
         if ($validator->fails()) {
@@ -117,6 +119,7 @@ class FunctionaryController extends Controller
         $functionary->names = $request->names;
         $functionary->surname = $request->surname;
         $functionary->document = $request->document;
+        $functionary->id_position = $request->id_position;
         $functionary->save();
 
         return response()->json([
