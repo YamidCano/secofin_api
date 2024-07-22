@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\pensiones;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PensionesController extends Controller
 {
@@ -12,15 +13,39 @@ class PensionesController extends Controller
      */
     public function index()
     {
-        //
+        $pensiones = pensiones::all();
+
+        return Response()->json([
+            'status' => true,
+            'data' => $pensiones ?? [],
+        ], 200);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'required'
+        ], [
+            'nombre.required' => 'El Item es obligatorio'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $pensiones = pensiones::create([
+            'nombre' => $request->nombre,
+            'status' => 1,
+        ]);
+
+        return Response()->json([
+            'status' => true,
+            'data' => $pensiones ?? [],
+            'message' => 'Item Creado exitosamente'
+        ], 200);
     }
 
     /**
@@ -34,9 +59,17 @@ class PensionesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(pensiones $pensiones)
+    public function show($id)
     {
-        //
+        $pensiones = pensiones::find($id);
+
+        if (!$pensiones) {
+            return response()->json(['message' => 'Item no encontrada'], 404);
+        }
+        return response()->json([
+            'status' => true,
+            'data' => $pensiones
+        ], 200);
     }
 
     /**
@@ -50,16 +83,52 @@ class PensionesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, pensiones $pensiones)
+    public function update(Request $request, $id)
     {
-        //
+        $pensiones = pensiones::find($id);
+
+        if (!$pensiones) {
+            return response()->json(['message' => 'Item no encontrado'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'required',
+        ], [
+            'nombre.required' => 'El Item es obligatorio',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $pensiones->nombre = $request->nombre;
+        $pensiones->save();
+
+        return response()->json([
+            'status' => true,
+            'data' => $pensiones,
+            'message' => 'Item actualizado exitosamente'
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(pensiones $pensiones)
+    public function destroy($id)
     {
-        //
+        $pensiones = pensiones::find($id);
+
+        if (!$pensiones) {
+            return response()->json(['message' => 'Item no encontrado'], 404);
+        }
+
+        // $pensiones->delete();
+        $pensiones->update(['status' => 2]);
+
+        return response()->json([
+            'status' => true,
+            'data' => $pensiones,
+            'message' => 'Item eliminado exitosamente'
+        ], 200);
     }
 }

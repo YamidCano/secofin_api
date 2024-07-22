@@ -14,4 +14,10 @@ modelo
 protected $fillable = [];
 
 
+Dependencia Vuej
+npm i pinia-plugin-persistedstate
+npm i encrypt-storage
+npm i --save zipson
+
+
 

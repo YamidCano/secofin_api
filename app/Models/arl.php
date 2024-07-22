@@ -10,4 +10,5 @@ class arl extends Model
     use HasFactory;
     // Especificar el nombre de la tabla
     protected $table = 'arl';
+    protected $guarded = [];
 }

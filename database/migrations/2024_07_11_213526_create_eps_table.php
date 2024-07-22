@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('eps', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nombre');
+            $table->integer('status');
             $table->timestamps();
         });
     }
