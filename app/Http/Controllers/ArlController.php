@@ -27,9 +27,10 @@ class ArlController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required'
+            'nombre' => 'required|unique'
         ], [
-            'nombre.required' => 'El Item es obligatorio'
+            'nombre.required' => 'El ARL es obligatorio',
+            'name.unique' => 'El ARL ya se encuentra registrado'
         ]);
 
         if ($validator->fails()) {
@@ -44,7 +45,7 @@ class ArlController extends Controller
         return Response()->json([
             'status' => true,
             'data' => $arl ?? [],
-            'message' => 'Item Creado exitosamente'
+            'message' => 'ARL Creado exitosamente'
         ], 200);
     }
 
@@ -64,7 +65,7 @@ class ArlController extends Controller
         $arl = arl::find($id);
 
         if (!$arl) {
-            return response()->json(['message' => 'Item no encontrada'], 404);
+            return response()->json(['message' => 'ARL no encontrada'], 404);
         }
         return response()->json([
             'status' => true,
@@ -88,13 +89,13 @@ class ArlController extends Controller
         $arl = arl::find($id);
 
         if (!$arl) {
-            return response()->json(['message' => 'Item no encontrado'], 404);
+            return response()->json(['message' => 'ARL no encontrado'], 404);
         }
 
         $validator = Validator::make($request->all(), [
             'nombre' => 'required',
         ], [
-            'nombre.required' => 'El Item es obligatorio',
+            'nombre.required' => 'El ARL es obligatorio',
         ]);
 
         if ($validator->fails()) {
@@ -107,7 +108,7 @@ class ArlController extends Controller
         return response()->json([
             'status' => true,
             'data' => $arl,
-            'message' => 'Item actualizado exitosamente'
+            'message' => 'ARL actualizado exitosamente'
         ], 200);
     }
 
@@ -119,7 +120,7 @@ class ArlController extends Controller
         $arl = arl::find($id);
 
         if (!$arl) {
-            return response()->json(['message' => 'Item no encontrado'], 404);
+            return response()->json(['message' => 'ARL no encontrado'], 404);
         }
 
         // $arl->delete();
@@ -128,7 +129,7 @@ class ArlController extends Controller
         return response()->json([
             'status' => true,
             'data' => $arl,
-            'message' => 'Item eliminado exitosamente'
+            'message' => 'ARL eliminado exitosamente'
         ], 200);
     }
 }
