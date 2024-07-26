@@ -27,9 +27,9 @@ class EpsController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required'
+            'name' => 'required'
         ], [
-            'nombre.required' => 'El Item es obligatorio'
+            'name.required' => 'El Item es obligatorio'
         ]);
 
         if ($validator->fails()) {
@@ -37,7 +37,7 @@ class EpsController extends Controller
         }
 
         $eps = eps::create([
-            'nombre' => $request->nombre,
+            'name' => $request->name,
             'status' => 1,
         ]);
 
@@ -92,16 +92,16 @@ class EpsController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required',
+            'name' => 'required',
         ], [
-            'nombre.required' => 'El Item es obligatorio',
+            'name.required' => 'El Item es obligatorio',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $eps->nombre = $request->nombre;
+        $eps->name = $request->name;
         $eps->save();
 
         return response()->json([

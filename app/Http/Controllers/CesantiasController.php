@@ -27,9 +27,9 @@ class CesantiasController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required'
+            'name' => 'required'
         ], [
-            'nombre.required' => 'El Item es obligatorio'
+            'naem.required' => 'El Item es obligatorio'
         ]);
 
         if ($validator->fails()) {
@@ -37,7 +37,7 @@ class CesantiasController extends Controller
         }
 
         $cesantias = cesantias::create([
-            'nombre' => $request->nombre,
+            'name' => $request->name,
             'status' => 1,
         ]);
 
@@ -92,16 +92,16 @@ class CesantiasController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required',
+            'name' => 'required',
         ], [
-            'nombre.required' => 'El Item es obligatorio',
+            'name.required' => 'El Item es obligatorio',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $cesantias->nombre = $request->nombre;
+        $cesantias->name = $request->name;
         $cesantias->save();
 
         return response()->json([
