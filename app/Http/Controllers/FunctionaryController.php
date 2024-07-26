@@ -31,12 +31,16 @@ class FunctionaryController extends Controller
             'surname' => 'required',
             'document' => 'required|unique:functionaries,document',
             'id_position' => 'required',
+            'id_arl' => 'required',
+
         ], [
             'names.required' => 'El Item es obligatorio',
             'surname.required' => 'El Item es obligatorio',
             'document.required' => 'El Item es obligatorio',
             'document.unique' => 'Usuario ya se encuentra creado',
             'id_position.required' => 'El Item es obligatorio',
+            'id_arl.required' => 'El Item es obligatorio',
+
         ]);
 
         if ($validator->fails()) {
@@ -47,7 +51,8 @@ class FunctionaryController extends Controller
             'names' => $request->names,
             'surname' => $request->surname,
             'document' => $request->document,
-            'id_position' => $request->id_position
+            'id_position' => $request->id_position,
+            'id_arl' => $request->id_arl,
         ]);
 
         return Response()->json([
@@ -105,11 +110,13 @@ class FunctionaryController extends Controller
             'surname' => 'required',
             'document' => 'required|unique:functionaries,document',
             'id_position' => 'required',
+            'id_arl' => 'required',
         ], [
             'names.required' => 'El Item es obligatorio',
             'surname.required' => 'El Item es obligatorio',
             'document.unique' => 'Usuario ya se encuentra creado',
             'id_position.required' => 'El Item es obligatorio',
+            'id_arl.required' => 'El Item es obligatorio',
         ]);
 
         if ($validator->fails()) {
@@ -120,6 +127,7 @@ class FunctionaryController extends Controller
         $functionary->surname = $request->surname;
         $functionary->document = $request->document;
         $functionary->id_position = $request->id_position;
+        $functionary->id_arl = $request->id_arl;
         $functionary->save();
 
         return response()->json([
