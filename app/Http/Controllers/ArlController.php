@@ -27,22 +27,22 @@ class ArlController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required|unique'
+            'nombre' => 'required|unique:arl,nombre'
         ], [
             'nombre.required' => 'El ARL es obligatorio',
-            'name.unique' => 'El ARL ya se encuentra registrado'
+            'nombre.unique' => 'El ARL ya se encuentra registrado'
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $arl = arl::create([
+        $arl = Arl::create([
             'nombre' => $request->nombre,
             'status' => 1,
         ]);
 
-        return Response()->json([
+        return response()->json([
             'status' => true,
             'data' => $arl ?? [],
             'message' => 'ARL Creado exitosamente'
