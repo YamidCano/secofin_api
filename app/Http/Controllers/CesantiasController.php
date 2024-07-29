@@ -27,9 +27,10 @@ class CesantiasController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required'
+            'nombre' => 'required|unique:cesantias,nombre'
         ], [
-            'naem.required' => 'El Item es obligatorio'
+            'name.required' => 'El cesantias es obligatorio',
+            'nombre.unique' => 'El cesantias ya se encuentra registrado'
         ]);
 
         if ($validator->fails()) {
@@ -37,14 +38,14 @@ class CesantiasController extends Controller
         }
 
         $cesantias = cesantias::create([
-            'name' => $request->name,
+            'nombre' => $request->nombre,
             'status' => 1,
         ]);
 
-        return Response()->json([
+        return response()->json([
             'status' => true,
             'data' => $cesantias ?? [],
-            'message' => 'Item Creado exitosamente'
+            'message' => 'cesantias Creado exitosamente'
         ], 200);
     }
 
@@ -64,7 +65,7 @@ class CesantiasController extends Controller
         $cesantias = cesantias::find($id);
 
         if (!$cesantias) {
-            return response()->json(['message' => 'Item no encontrada'], 404);
+            return response()->json(['message' => 'cesantias no encontrada'], 404);
         }
         return response()->json([
             'status' => true,
@@ -88,26 +89,26 @@ class CesantiasController extends Controller
         $cesantias = cesantias::find($id);
 
         if (!$cesantias) {
-            return response()->json(['message' => 'Item no encontrado'], 404);
+            return response()->json(['message' => 'cesantias no encontrado'], 404);
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'nombre' => 'required',
         ], [
-            'name.required' => 'El Item es obligatorio',
+            'nombre.required' => 'El cesantias es obligatorio',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $cesantias->name = $request->name;
+        $cesantias->nombre = $request->nombre;
         $cesantias->save();
 
         return response()->json([
             'status' => true,
             'data' => $cesantias,
-            'message' => 'Item actualizado exitosamente'
+            'message' => 'cesantias actualizado exitosamente'
         ], 200);
     }
 
@@ -119,7 +120,7 @@ class CesantiasController extends Controller
         $cesantias = cesantias::find($id);
 
         if (!$cesantias) {
-            return response()->json(['message' => 'Item no encontrado'], 404);
+            return response()->json(['message' => 'cesantias no encontrado'], 404);
         }
 
         // $cesantias->delete();
@@ -128,7 +129,7 @@ class CesantiasController extends Controller
         return response()->json([
             'status' => true,
             'data' => $cesantias,
-            'message' => 'Item eliminado exitosamente'
+            'message' => 'cesantias eliminado exitosamente'
         ], 200);
     }
 }

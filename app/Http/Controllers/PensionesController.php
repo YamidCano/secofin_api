@@ -27,9 +27,10 @@ class PensionesController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required'
+            'nombre' => 'required|unique:pensiones,nombre'
         ], [
-            'name.required' => 'El Item es obligatorio'
+            'name.required' => 'El pensiones es obligatorio',
+            'nombre.unique' => 'El pensiones ya se encuentra registrado'
         ]);
 
         if ($validator->fails()) {
@@ -37,14 +38,14 @@ class PensionesController extends Controller
         }
 
         $pensiones = pensiones::create([
-            'name' => $request->name,
+            'nombre' => $request->nombre,
             'status' => 1,
         ]);
 
-        return Response()->json([
+        return response()->json([
             'status' => true,
             'data' => $pensiones ?? [],
-            'message' => 'Item Creado exitosamente'
+            'message' => 'pensiones Creado exitosamente'
         ], 200);
     }
 
@@ -64,7 +65,7 @@ class PensionesController extends Controller
         $pensiones = pensiones::find($id);
 
         if (!$pensiones) {
-            return response()->json(['message' => 'Item no encontrada'], 404);
+            return response()->json(['message' => 'pensiones no encontrada'], 404);
         }
         return response()->json([
             'status' => true,
@@ -88,26 +89,26 @@ class PensionesController extends Controller
         $pensiones = pensiones::find($id);
 
         if (!$pensiones) {
-            return response()->json(['message' => 'Item no encontrado'], 404);
+            return response()->json(['message' => 'pensiones no encontrado'], 404);
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'nombre' => 'required',
         ], [
-            'name.required' => 'El Item es obligatorio',
+            'nombre.required' => 'El pensiones es obligatorio',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $pensiones->name = $request->name;
+        $pensiones->nombre = $request->nombre;
         $pensiones->save();
 
         return response()->json([
             'status' => true,
             'data' => $pensiones,
-            'message' => 'Item actualizado exitosamente'
+            'message' => 'pensiones actualizado exitosamente'
         ], 200);
     }
 
@@ -119,7 +120,7 @@ class PensionesController extends Controller
         $pensiones = pensiones::find($id);
 
         if (!$pensiones) {
-            return response()->json(['message' => 'Item no encontrado'], 404);
+            return response()->json(['message' => 'pensiones no encontrado'], 404);
         }
 
         // $pensiones->delete();
@@ -128,7 +129,8 @@ class PensionesController extends Controller
         return response()->json([
             'status' => true,
             'data' => $pensiones,
-            'message' => 'Item eliminado exitosamente'
+            'message' => 'pensiones eliminado exitosamente'
         ], 200);
     }
 }
+

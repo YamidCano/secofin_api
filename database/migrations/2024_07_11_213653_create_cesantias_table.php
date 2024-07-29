@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cesantias', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('nombre')->unique();
             $table->integer('status');
             $table->timestamps();
         });

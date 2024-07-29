@@ -27,9 +27,10 @@ class EpsController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required'
+            'nombre' => 'required|unique:eps,nombre'
         ], [
-            'name.required' => 'El Item es obligatorio'
+            'name.required' => 'El EPS es obligatorio',
+            'nombre.unique' => 'El EPS ya se encuentra registrado'
         ]);
 
         if ($validator->fails()) {
@@ -37,14 +38,14 @@ class EpsController extends Controller
         }
 
         $eps = eps::create([
-            'name' => $request->name,
+            'nombre' => $request->nombre,
             'status' => 1,
         ]);
 
-        return Response()->json([
+        return response()->json([
             'status' => true,
             'data' => $eps ?? [],
-            'message' => 'Item Creado exitosamente'
+            'message' => 'EPS Creado exitosamente'
         ], 200);
     }
 
@@ -64,7 +65,7 @@ class EpsController extends Controller
         $eps = eps::find($id);
 
         if (!$eps) {
-            return response()->json(['message' => 'Item no encontrada'], 404);
+            return response()->json(['message' => 'eps no encontrada'], 404);
         }
         return response()->json([
             'status' => true,
@@ -88,26 +89,26 @@ class EpsController extends Controller
         $eps = eps::find($id);
 
         if (!$eps) {
-            return response()->json(['message' => 'Item no encontrado'], 404);
+            return response()->json(['message' => 'eps no encontrado'], 404);
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'nombre' => 'required',
         ], [
-            'name.required' => 'El Item es obligatorio',
+            'nombre.required' => 'El eps es obligatorio',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $eps->name = $request->name;
+        $eps->nombre = $request->nombre;
         $eps->save();
 
         return response()->json([
             'status' => true,
             'data' => $eps,
-            'message' => 'Item actualizado exitosamente'
+            'message' => 'EPS actualizado exitosamente'
         ], 200);
     }
 
@@ -119,7 +120,7 @@ class EpsController extends Controller
         $eps = eps::find($id);
 
         if (!$eps) {
-            return response()->json(['message' => 'Item no encontrado'], 404);
+            return response()->json(['message' => 'EPS no encontrado'], 404);
         }
 
         // $eps->delete();
@@ -128,7 +129,7 @@ class EpsController extends Controller
         return response()->json([
             'status' => true,
             'data' => $eps,
-            'message' => 'Item eliminado exitosamente'
+            'message' => 'EPS eliminado exitosamente'
         ], 200);
     }
 }
