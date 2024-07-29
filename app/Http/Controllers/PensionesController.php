@@ -27,9 +27,9 @@ class PensionesController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required'
+            'name' => 'required'
         ], [
-            'nombre.required' => 'El Item es obligatorio'
+            'name.required' => 'El Item es obligatorio'
         ]);
 
         if ($validator->fails()) {
@@ -37,7 +37,7 @@ class PensionesController extends Controller
         }
 
         $pensiones = pensiones::create([
-            'nombre' => $request->nombre,
+            'name' => $request->name,
             'status' => 1,
         ]);
 
@@ -92,16 +92,16 @@ class PensionesController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required',
+            'name' => 'required',
         ], [
-            'nombre.required' => 'El Item es obligatorio',
+            'name.required' => 'El Item es obligatorio',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $pensiones->nombre = $request->nombre;
+        $pensiones->name = $request->name;
         $pensiones->save();
 
         return response()->json([

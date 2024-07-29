@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('document');
             $table->unsignedBigInteger('id_position')->nullable();
             $table->foreign('id_position')->references('id')->on('positions');
+            $table->unsignedBigInteger('id_arl')->nullable();
+            $table->foreign('id_arl')->references('id')->on('arl');
+
             $table->timestamps();
         });
     }
