@@ -46,6 +46,7 @@ Route::prefix('arl')->group(function () {
     Route::post('/create', [ArlController::class, 'create']);
     Route::get('/show/{id}', [ArlController::class, 'show']);
     Route::put('/update/{id}', [ArlController::class, 'update']);
+    Route::put('/updateStatus/{id}', [ArlController::class, 'updateStatus']);
     Route::delete('/delete/{id}', [ArlController::class, 'destroy']);
 });
 
