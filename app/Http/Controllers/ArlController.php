@@ -28,7 +28,7 @@ class ArlController extends Controller {
         $validator = Validator::make( $request->all(), [
             'nombre' => 'required|unique:arl,nombre',
         ], [
-            'name.required' => 'El ARL es obligatorio',
+            'nombre.required' => 'El ARL es obligatorio',
             'nombre.unique' => 'El ARL ya se encuentra registrado',
         ] );
 
