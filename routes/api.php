@@ -55,6 +55,7 @@ Route::prefix('eps')->group(function () {
     Route::post('/create', [EpsController::class, 'create']);
     Route::get('/show/{id}', [EpsController::class, 'show']);
     Route::put('/update/{id}', [EpsController::class, 'update']);
+    Route::put('/updateStatus/{id}', [EpsController::class, 'updateStatus']);
     Route::delete('/delete/{id}', [EpsController::class, 'destroy']);
 });
 
