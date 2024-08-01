@@ -5,11 +5,6 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\FunctionaryController;
 use App\Http\Controllers\PositionController;
-use App\HTTP\Controllers\PayrollController;
-use App\HTTP\Controllers\EpsController;
-use App\HTTP\Controllers\ArlController;
-use App\HTTP\Controllers\CesantiasController;
-use App\HTTP\Controllers\PensionesController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -33,45 +28,31 @@ Route::prefix('position')->group(function () {
     Route::delete('/delete/{id}', [PositionController::class, 'destroy']);
 });
 
-Route::prefix('payroll')->group(function () {
-    Route::get('/', [PayrollController::class, 'index']);
-    Route::post('/create', [PayrollController::class, 'create']);
-    Route::get('/show/{id}', [PayrollController::class, 'show']);
-    Route::put('/update/{id}', [PayrollController::class, 'update']);
-    Route::delete('/delete/{id}', [PayrollController::class, 'destroy']);
+Route::prefix('arl')->group(function () {
+    Route::get('/', 'App\Http\Controllers\PayrollController@index');
+    Route::post('/create', 'App\Http\Controllers\PayrollController@create');
+    Route::get('/show/{id}', 'App\Http\Controllers\PayrollController@show');
+    Route::put('/update/{id}', 'App\Http\Controllers\PayrollController@update');
+    Route::put('/updateStatus/{id}', 'App\Http\Controllers\PayrollController@updateStatus');
+    Route::delete('/delete/{id}', 'App\Http\Controllers\PayrollController@destroy');
 });
 
 Route::prefix('arl')->group(function () {
-    Route::get('/', [ArlController::class, 'index']);
-    Route::post('/create', [ArlController::class, 'create']);
-    Route::get('/show/{id}', [ArlController::class, 'show']);
-    Route::put('/update/{id}', [ArlController::class, 'update']);
-    Route::put('/updateStatus/{id}', [ArlController::class, 'updateStatus']);
-    Route::delete('/delete/{id}', [ArlController::class, 'destroy']);
+    Route::get('/', 'App\Http\Controllers\ArlController@index');
+    Route::post('/create', 'App\Http\Controllers\ArlController@create');
+    Route::get('/show/{id}', 'App\Http\Controllers\ArlController@show');
+    Route::put('/update/{id}', 'App\Http\Controllers\ArlController@update');
+    Route::put('/updateStatus/{id}', 'App\Http\Controllers\ArlController@updateStatus');
+    Route::delete('/delete/{id}', 'App\Http\Controllers\ArlController@destroy');
 });
 
 Route::prefix('eps')->group(function () {
-    Route::get('/', [EpsController::class, 'index']);
-    Route::post('/create', [EpsController::class, 'create']);
-    Route::get('/show/{id}', [EpsController::class, 'show']);
-    Route::put('/update/{id}', [EpsController::class, 'update']);
-    Route::put('/updateStatus/{id}', [EpsController::class, 'updateStatus']);
-    Route::delete('/delete/{id}', [EpsController::class, 'destroy']);
+    Route::get('/', 'App\Http\Controllers\EpsController@index');
+    Route::post('/create', 'App\Http\Controllers\EpsController@create');
+    Route::get('/show/{id}', 'App\Http\Controllers\EpsController@show');
+    Route::put('/update/{id}', 'App\Http\Controllers\EpsController@update');
+    Route::put('/updateStatus/{id}', 'App\Http\Controllers\EpsController@updateStatus');
+    Route::delete('/delete/{id}', 'App\Http\Controllers\EpsController@destroy');
 });
 
-Route::prefix('cesantias')->group(function () {
-    Route::get('/', [CesantiasController::class, 'index']);
-    Route::post('/create', [CesantiasController::class, 'create']);
-    Route::get('/show/{id}', [CesantiasController::class, 'show']);
-    Route::put('/update/{id}', [CesantiasController::class, 'update']);
-    Route::delete('/delete/{id}', [CesantiasController::class, 'destroy']);
-});
-
-Route::prefix('pensiones')->group(function () {
-    Route::get('/', [PensionesController::class, 'index']);
-    Route::post('/create', [PensionesController::class, 'create']);
-    Route::get('/show/{id}', [PensionesController::class, 'show']);
-    Route::put('/update/{id}', [PensionesController::class, 'update']);
-    Route::delete('/delete/{id}', [PensionesController::class, 'destroy']);
-});
 

@@ -6,131 +6,130 @@ use App\Models\pensiones;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class PensionesController extends Controller
-{
+class PensionesController extends Controller {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
+    * Display a listing of the resource.
+    */
+
+    public function index() {
         $pensiones = pensiones::all();
 
-        return Response()->json([
+        return Response()->json( [
             'status' => true,
             'data' => $pensiones ?? [],
-        ], 200);
+        ], 200 );
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
+    * Show the form for creating a new resource.
+    */
+
+    public function create( Request $request ) {
+        $validator = Validator::make( $request->all(), [
             'nombre' => 'required|unique:pensiones,nombre'
         ], [
             'name.required' => 'El pensiones es obligatorio',
             'nombre.unique' => 'El pensiones ya se encuentra registrado'
-        ]);
+        ] );
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+        if ( $validator->fails() ) {
+            return response()->json( [ 'errors' => $validator->errors() ], 422 );
         }
 
-        $pensiones = pensiones::create([
+        $pensiones = pensiones::create( [
             'nombre' => $request->nombre,
             'status' => 1,
-        ]);
+        ] );
 
-        return response()->json([
+        return response()->json( [
             'status' => true,
             'data' => $pensiones ?? [],
             'message' => 'pensiones Creado exitosamente'
-        ], 200);
+        ], 200 );
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
+    * Store a newly created resource in storage.
+    */
+
+    public function store( Request $request ) {
         //
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        $pensiones = pensiones::find($id);
+    * Display the specified resource.
+    */
 
-        if (!$pensiones) {
-            return response()->json(['message' => 'pensiones no encontrada'], 404);
+    public function show( $id ) {
+        $pensiones = pensiones::find( $id );
+
+        if ( !$pensiones ) {
+            return response()->json( [ 'message' => 'pensiones no encontrada' ], 404 );
         }
-        return response()->json([
+        return response()->json( [
             'status' => true,
             'data' => $pensiones
-        ], 200);
+        ], 200 );
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(pensiones $pensiones)
-    {
+    * Show the form for editing the specified resource.
+    */
+
+    public function edit( pensiones $pensiones ) {
         //
     }
 
     /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
-    {
-        $pensiones = pensiones::find($id);
+    * Update the specified resource in storage.
+    */
 
-        if (!$pensiones) {
-            return response()->json(['message' => 'pensiones no encontrado'], 404);
+    public function update( Request $request, $id ) {
+        $pensiones = pensiones::find( $id );
+
+        if ( !$pensiones ) {
+            return response()->json( [ 'message' => 'pensiones no encontrado' ], 404 );
         }
 
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make( $request->all(), [
             'nombre' => 'required',
         ], [
             'nombre.required' => 'El pensiones es obligatorio',
-        ]);
+        ] );
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+        if ( $validator->fails() ) {
+            return response()->json( [ 'errors' => $validator->errors() ], 422 );
         }
 
         $pensiones->nombre = $request->nombre;
         $pensiones->save();
 
-        return response()->json([
+        return response()->json( [
             'status' => true,
             'data' => $pensiones,
             'message' => 'pensiones actualizado exitosamente'
-        ], 200);
+        ], 200 );
     }
 
     /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        $pensiones = pensiones::find($id);
+    * Remove the specified resource from storage.
+    */
 
-        if (!$pensiones) {
-            return response()->json(['message' => 'pensiones no encontrado'], 404);
+    public function destroy( $id ) {
+        $pensiones = pensiones::find( $id );
+
+        if ( !$pensiones ) {
+            return response()->json( [ 'message' => 'pensiones no encontrado' ], 404 );
         }
 
         // $pensiones->delete();
-        $pensiones->update(['status' => 2]);
+        $pensiones->update( [ 'status' => 2 ] );
 
-        return response()->json([
+        return response()->json( [
             'status' => true,
             'data' => $pensiones,
             'message' => 'pensiones eliminado exitosamente'
-        ], 200);
+        ], 200 );
     }
 }
 

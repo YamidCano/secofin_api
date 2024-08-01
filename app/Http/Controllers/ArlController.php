@@ -6,7 +6,7 @@ use App\Models\arl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class ArlController extends Controller {
+class ArlController extends Controller  {
     /**
     * Display a listing of the resource.
     */
