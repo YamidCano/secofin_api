@@ -28,7 +28,7 @@ Route::prefix('position')->group(function () {
     Route::delete('/delete/{id}', [PositionController::class, 'destroy']);
 });
 
-Route::prefix('arl')->group(function () {
+Route::prefix('Payroll')->group(function () {
     Route::get('/', 'App\Http\Controllers\PayrollController@index');
     Route::post('/create', 'App\Http\Controllers\PayrollController@create');
     Route::get('/show/{id}', 'App\Http\Controllers\PayrollController@show');
@@ -53,6 +53,24 @@ Route::prefix('eps')->group(function () {
     Route::put('/update/{id}', 'App\Http\Controllers\EpsController@update');
     Route::put('/updateStatus/{id}', 'App\Http\Controllers\EpsController@updateStatus');
     Route::delete('/delete/{id}', 'App\Http\Controllers\EpsController@destroy');
+});
+
+Route::prefix('cesantias')->group(function () {
+    Route::get('/', 'App\Http\Controllers\CesantiasController@index');
+    Route::post('/create', 'App\Http\Controllers\CesantiasController@create');
+    Route::get('/show/{id}', 'App\Http\Controllers\CesantiasController@show');
+    Route::put('/update/{id}', 'App\Http\Controllers\CesantiasController@update');
+    Route::put('/updateStatus/{id}', 'App\Http\Controllers\CesantiasController@updateStatus');
+    Route::delete('/delete/{id}', 'App\Http\Controllers\CesantiasController@destroy');
+});
+
+Route::prefix('pensiones')->group(function () {
+    Route::get('/', 'App\Http\Controllers\PensionesController@index');
+    Route::post('/create', 'App\Http\Controllers\PensionesController@create');
+    Route::get('/show/{id}', 'App\Http\Controllers\PensionesController@show');
+    Route::put('/update/{id}', 'App\Http\Controllers\PensionesController@update');
+    Route::put('/updateStatus/{id}', 'App\Http\Controllers\PensionesController@updateStatus');
+    Route::delete('/delete/{id}', 'App\Http\Controllers\PensionesController@destroy');
 });
 
 

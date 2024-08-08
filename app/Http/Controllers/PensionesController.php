@@ -28,8 +28,8 @@ class PensionesController extends Controller {
         $validator = Validator::make( $request->all(), [
             'nombre' => 'required|unique:pensiones,nombre'
         ], [
-            'name.required' => 'El pensiones es obligatorio',
-            'nombre.unique' => 'El pensiones ya se encuentra registrado'
+            'nombre.required' => 'El campo pensiones es obligatorio',
+            'nombre.unique' => 'El campo pensiones ya se encuentra registrado'
         ] );
 
         if ( $validator->fails() ) {
@@ -44,7 +44,7 @@ class PensionesController extends Controller {
         return response()->json( [
             'status' => true,
             'data' => $pensiones ?? [],
-            'message' => 'pensiones Creado exitosamente'
+            'message' => 'Pensiones Creado exitosamente'
         ], 200 );
     }
 
@@ -64,7 +64,7 @@ class PensionesController extends Controller {
         $pensiones = pensiones::find( $id );
 
         if ( !$pensiones ) {
-            return response()->json( [ 'message' => 'pensiones no encontrada' ], 404 );
+            return response()->json( [ 'message' => 'Pensiones no encontrada' ], 404 );
         }
         return response()->json( [
             'status' => true,
@@ -88,13 +88,13 @@ class PensionesController extends Controller {
         $pensiones = pensiones::find( $id );
 
         if ( !$pensiones ) {
-            return response()->json( [ 'message' => 'pensiones no encontrado' ], 404 );
+            return response()->json( [ 'message' => 'Pensiones no encontrado' ], 404 );
         }
 
         $validator = Validator::make( $request->all(), [
             'nombre' => 'required',
         ], [
-            'nombre.required' => 'El pensiones es obligatorio',
+            'nombre.required' => 'El campo pensiones es obligatorio',
         ] );
 
         if ( $validator->fails() ) {
@@ -107,7 +107,7 @@ class PensionesController extends Controller {
         return response()->json( [
             'status' => true,
             'data' => $pensiones,
-            'message' => 'pensiones actualizado exitosamente'
+            'message' => 'Pensiones actualizado exitosamente'
         ], 200 );
     }
 
@@ -119,16 +119,35 @@ class PensionesController extends Controller {
         $pensiones = pensiones::find( $id );
 
         if ( !$pensiones ) {
-            return response()->json( [ 'message' => 'pensiones no encontrado' ], 404 );
+            return response()->json( [ 'message' => 'Pensiones no encontrado' ], 404 );
         }
 
-        // $pensiones->delete();
-        $pensiones->update( [ 'status' => 2 ] );
+        $pensiones->delete();
 
         return response()->json( [
             'status' => true,
             'data' => $pensiones,
-            'message' => 'pensiones eliminado exitosamente'
+            'message' => 'Pensiones eliminado exitosamente'
+        ], 200 );
+    }
+
+    public function updateStatus( $id ) {
+        $pensiones = pensiones::find( $id );
+
+        if ( !$pensiones ) {
+            return response()->json( [ 'message' => 'Pensiones no encontrado' ], 404 );
+        }
+
+        if ( $pensiones->status == 1 ) {
+            $pensiones->update( [ 'status' => 2 ] );
+        } else {
+            $pensiones->update( [ 'status' => 1 ] );
+        }
+
+        return response()->json( [
+            'status' => true,
+            'data' => $pensiones,
+            'message' => 'Estado pensiones actualizado exitosamente',
         ], 200 );
     }
 }
