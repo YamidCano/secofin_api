@@ -55,22 +55,13 @@ Route::prefix('eps')->group(function () {
     Route::delete('/delete/{id}', 'App\Http\Controllers\EpsController@destroy');
 });
 
-Route::prefix('cesantias')->group(function () {
-    Route::get('/', 'App\Http\Controllers\CesantiasController@index');
-    Route::post('/create', 'App\Http\Controllers\CesantiasController@create');
-    Route::get('/show/{id}', 'App\Http\Controllers\CesantiasController@show');
-    Route::put('/update/{id}', 'App\Http\Controllers\CesantiasController@update');
-    Route::put('/updateStatus/{id}', 'App\Http\Controllers\CesantiasController@updateStatus');
-    Route::delete('/delete/{id}', 'App\Http\Controllers\CesantiasController@destroy');
-});
-
-Route::prefix('pensiones')->group(function () {
-    Route::get('/', 'App\Http\Controllers\PensionesController@index');
-    Route::post('/create', 'App\Http\Controllers\PensionesController@create');
-    Route::get('/show/{id}', 'App\Http\Controllers\PensionesController@show');
-    Route::put('/update/{id}', 'App\Http\Controllers\PensionesController@update');
-    Route::put('/updateStatus/{id}', 'App\Http\Controllers\PensionesController@updateStatus');
-    Route::delete('/delete/{id}', 'App\Http\Controllers\PensionesController@destroy');
+Route::prefix('afp')->group(function () {
+    Route::get('/', 'App\Http\Controllers\AfpController@index');
+    Route::post('/create', 'App\Http\Controllers\AfpController@create');
+    Route::get('/show/{id}', 'App\Http\Controllers\AfpController@show');
+    Route::put('/update/{id}', 'App\Http\Controllers\AfpController@update');
+    Route::put('/updateStatus/{id}', 'App\Http\Controllers\AfpController@updateStatus');
+    Route::delete('/delete/{id}', 'App\Http\Controllers\AfpController@destroy');
 });
 
 
